@@ -1,14 +1,16 @@
+"use client";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useContext } from "react";
-import Api from "../config/Api.js"
 import toast from "react-hot-toast";
 
 const UserContext = React.createContext();
 
-// set Api to include credentials with every request
-// Api.defaults.withCredentials = true;
+// set axios to include credentials with every request
+axios.defaults.withCredentials = true;
 
 export const UserContextProvider = ({ children }) => {
+  const serverUrl = "http://localhost:8000";
 
   const router = useRouter();
 
@@ -34,17 +36,14 @@ export const UserContextProvider = ({ children }) => {
     }
 
     try {
-      const res = await Api.post('/api/v1/register', userState);
-      console.log("User registered successfully", res.data);
-      toast.success("User registered successfully");
-
+      const res = await axios.post(`${serverUrl}/api/v1/register`, userState);
+      toast.success("User registered successfully", res);
       // clear the form
       setUserState({
         name: "",
         email: "",
         password: "",
       });
-
       // redirect to login page
       router.push("/login");
     } catch (error) {
@@ -57,8 +56,8 @@ export const UserContextProvider = ({ children }) => {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      const res = await Api.post(
-        '/api/v1/login',
+      const res = await axios.post(
+        `${serverUrl}/api/v1/login`,
         {
           email: userState.email,
           password: userState.password,
@@ -67,18 +66,14 @@ export const UserContextProvider = ({ children }) => {
           withCredentials: true, // send cookies to the server
         }
       );
-
-      toast.success("User logged in successfully");
-
+      toast.success("User logged in successfully", res);
       // clear the form
       setUserState({
         email: "",
         password: "",
       });
-
       // refresh the user details
       await getUser(); // fetch before redirecting
-
       // push user to the dashboard page
       router.push("/");
     } catch (error) {
@@ -91,35 +86,29 @@ export const UserContextProvider = ({ children }) => {
   const userLoginStatus = async () => {
     let loggedIn = false;
     try {
-      const res = await Api.get('/api/v1/login-status', {
+      const res = await axios.get(`${serverUrl}/api/v1/login-status`, {
         withCredentials: true, // send cookies to the server
       });
-
       // coerce the string to boolean
       loggedIn = !!res.data;
       setLoading(false);
-
       if (!loggedIn) {
         router.push("/login");
       }
     } catch (error) {
       console.log("Error getting user login status", error);
     }
-
     return loggedIn;
   };
 
   // logout user
   const logoutUser = async () => {
     try {
-      const res = await Api.get('/api/v1/logout', {
+      await axios.get(`${serverUrl}/api/v1/logout`, {
         withCredentials: true, // send cookies to the server
       });
-
       toast.success("User logged out successfully");
-
       setUser({});
-
       // redirect to login page
       router.push("/login");
     } catch (error) {
@@ -132,17 +121,15 @@ export const UserContextProvider = ({ children }) => {
   const getUser = async () => {
     setLoading(true);
     try {
-      const res = await Api.get('/api/v1/user', {
+      const res = await axios.get(`${serverUrl}/api/v1/user`, {
         withCredentials: true, // send cookies to the server
       });
-
       setUser((prevState) => {
         return {
           ...prevState,
           ...res.data,
         };
       });
-
       setLoading(false);
     } catch (error) {
       console.log("Error getting user details", error);
@@ -157,7 +144,7 @@ export const UserContextProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const res = await Api.patch('/api/v1/user', data, {
+      const res = await axios.patch(`${serverUrl}/api/v1/user`, data, {
         withCredentials: true, // send cookies to the server
       });
 
@@ -183,8 +170,8 @@ export const UserContextProvider = ({ children }) => {
   const emailVerification = async () => {
     setLoading(true);
     try {
-      const res = await Api.post(
-        '/api/v1/verify-email',
+      const res = await axios.post(
+        `${serverUrl}/api/v1/verify-email`,
         {},
         {
           withCredentials: true, // send cookies to the server
@@ -204,8 +191,8 @@ export const UserContextProvider = ({ children }) => {
   const verifyUser = async (token) => {
     setLoading(true);
     try {
-      const res = await Api.post(
-        `/api/v1/verify-user/${token}`,
+      const res = await axios.post(
+        `${serverUrl}/api/v1/verify-user/${token}`,
         {},
         {
           withCredentials: true, // send cookies to the server
@@ -232,8 +219,8 @@ export const UserContextProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const res = await Api.post(
-        '/api/v1/forgot-password',
+      const res = await axios.post(
+        `${serverUrl}/api/v1/forgot-password`,
         {
           email,
         },
@@ -246,7 +233,7 @@ export const UserContextProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       console.log("Error sending forgot password email", error);
-      toast.error(error.response.data.message);
+      toast.error(error.res.data.message);
       setLoading(false);
     }
   };
@@ -256,8 +243,8 @@ export const UserContextProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const res = await Api.post(
-        `/api/v1/reset-password/${token}`,
+      const res = await axios.post(
+        `${serverUrl}/api/v1/reset-password/${token}`,
         {
           password,
         },
@@ -272,7 +259,7 @@ export const UserContextProvider = ({ children }) => {
       router.push("/login");
     } catch (error) {
       console.log("Error resetting password", error);
-      toast.error(error.response.data.message);
+      toast.error(error.res.data.message);
       setLoading(false);
     }
   };
@@ -282,8 +269,8 @@ export const UserContextProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const res = await Api.patch(
-        '/api/v1/change-password',
+      const res = await axios.patch(
+        `${serverUrl}/api/v1/change-password`,
         { currentPassword, newPassword },
         {
           withCredentials: true, // send cookies to the server
@@ -294,7 +281,7 @@ export const UserContextProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       console.log("Error changing password", error);
-      toast.error(error.response.data.message);
+      toast.error(error.res.data.message);
       setLoading(false);
     }
   };
@@ -303,8 +290,8 @@ export const UserContextProvider = ({ children }) => {
   const getAllUsers = async () => {
     setLoading(true);
     try {
-      const res = await Api.get(
-        ' /api/v1/admin/users',
+      const res = await axios.get(
+        `${serverUrl}/api/v1/admin/users`,
         {},
         {
           withCredentials: true, // send cookies to the server
@@ -315,7 +302,7 @@ export const UserContextProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       console.log("Error getting all users", error);
-      toast.error(error.response.data.message);
+      toast.error(error.res.data.message);
       setLoading(false);
     }
   };
@@ -334,8 +321,8 @@ export const UserContextProvider = ({ children }) => {
   const deleteUser = async (id) => {
     setLoading(true);
     try {
-      const res = await Api.delete(
-        `/api/v1/admin/users/${id}`,
+      const res = await axios.delete(
+        `${serverUrl}/api/v1/admin/users/${id}`,
         {},
         {
           withCredentials: true, // send cookies to the server
@@ -348,7 +335,7 @@ export const UserContextProvider = ({ children }) => {
       getAllUsers();
     } catch (error) {
       console.log("Error deleting user", error);
-      toast.error(error.response.data.message);
+      toast.error(error.res.data.message);
       setLoading(false);
     }
   };
@@ -356,12 +343,10 @@ export const UserContextProvider = ({ children }) => {
   useEffect(() => {
     const loginStatusGetUser = async () => {
       const isLoggedIn = await userLoginStatus();
-
       if (isLoggedIn) {
         await getUser();
       }
-    };
-
+    }
     loginStatusGetUser();
   }, []);
 
@@ -378,8 +363,8 @@ export const UserContextProvider = ({ children }) => {
         userState,
         handlerUserInput,
         loginUser,
-        logoutUser,
         userLoginStatus,
+        logoutUser,
         user,
         updateUser,
         emailVerification,
@@ -389,6 +374,7 @@ export const UserContextProvider = ({ children }) => {
         changePassword,
         allUsers,
         deleteUser,
+        loading,
       }}
     >
       {children}

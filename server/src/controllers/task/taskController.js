@@ -3,12 +3,12 @@ import TaskModel from "../../models/tasks/TaskModel.js";
 export const createTask = async (req, res) => {
   try {
     const { title, description, dueDate, priority, status } = req.body;
-    if (!title || title.trim() === "") {
-      res.status(400).json({ message: "Title is required!" });
-    }
-    if (!description || description.trim() === "") {
-      res.status(400).json({ message: "Description is required!" });
-    }
+    // if (!title || title.trim() === "") {
+    //   res.status(400).json({ message: "Title is required!" });
+    // }
+    // if (!description || description.trim() === "") {
+    //   res.status(400).json({ message: "Description is required!" });
+    // }
     let task = await TaskModel.create({
       title,
       description,
@@ -33,7 +33,6 @@ export const createTask = async (req, res) => {
       res.status(201).json(task);
     }
   } catch (error) {
-    console.log("Error in createTask: ", error.message);
     res.status(500).json({ message: error.message });
   }
 };
@@ -79,9 +78,8 @@ export const getTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { id } = req.params;
-    const { title, description, dueDate, priority, status, completed } =
-      req.body;
+    const id = req.params.id;
+    const { title, description, dueDate, priority, status, completed } = req.body;
     if (!id) {
       res.status(400).json({ message: "Please provide a task id" });
     }
@@ -103,7 +101,7 @@ export const updateTask = async (req, res) => {
     task.status = status || task.status;
     task.completed = completed || task.completed;
     await task.save();
-    res.status(200).json({ message: "Task updated successfully!" , task });
+    res.status(200).json({ message: "Task updated successfully!", task });
   } catch (error) {
     console.log("Error in updateTask: ", error.message);
     res.status(500).json({ message: error.message });

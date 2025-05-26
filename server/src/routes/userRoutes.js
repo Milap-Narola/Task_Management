@@ -4,11 +4,11 @@ import {
   forgotPassword,
   getUser,
   loginUser,
+  userLoginStatus,
   logoutUser,
   registerUser,
   resetPassword,
   updateUser,
-  userLoginStatus,
   verifyEmail,
   verifyUser,
 } from "../controllers/auth/userController.js";

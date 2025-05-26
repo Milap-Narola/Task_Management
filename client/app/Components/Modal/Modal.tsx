@@ -3,7 +3,7 @@ import { useTasks } from "@/context/taskContext";
 import useDetectOutside from "@/hooks/useDetectOutside";
 import React, { useEffect } from "react";
 
-function Modal() {
+const Modal = () => {
   const {
     task,
     handleInput,
@@ -32,13 +32,13 @@ function Modal() {
     }
   }, [modalMode, activeTask]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (modalMode === "edit") {
-      updateTask(task);
+      await updateTask(task);
     } else if (modalMode === "add") {
-      createTask(task);
+      await createTask(task);
     }
     closeModal();
   };
@@ -118,9 +118,8 @@ function Modal() {
         <div className="mt-8">
           <button
             type="submit"
-            className={`text-white py-2 rounded-md w-full hover:bg-blue-500 transition duration-200 ease-in-out ${
-              modalMode === "edit" ? "bg-blue-400" : "bg-green-400"
-            }`}
+            className={`text-white py-2 rounded-md w-full hover:bg-blue-500 transition duration-200 ease-in-out ${modalMode === "edit" ? "bg-blue-400" : "bg-green-400"
+              }`}
           >
             {modalMode === "edit" ? "Update Task" : "Create Task"}
           </button>

@@ -5,7 +5,7 @@ interface DetectOutsideProps {
   callback: () => void;
 }
 
-function useDetectOutside({ ref, callback }: DetectOutsideProps) {
+const useDetectOutside = ({ ref, callback }: DetectOutsideProps) => {
   useEffect(() => {
     // handler to detect clicks outside the ref
     const handleClickOutside = (event: any) => {

@@ -5,10 +5,12 @@ import toast from "react-hot-toast";
 
 const TasksContext = createContext();
 
-const serverUrl = "localhost:8000/api/v1";
+const serverUrl = "http://localhost:8000/api/v2";
 
 export const TasksProvider = ({ children }) => {
   const userId = useUserContext().user._id;
+  console.log("User ID from context:", userId);
+  
 
   const [tasks, setTasks] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -48,9 +50,9 @@ export const TasksProvider = ({ children }) => {
   const getTasks = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${serverUrl}/tasks`);
+      const res = await axios.get(`${serverUrl}/tasks`);
 
-      setTasks(response.data.tasks);
+      setTasks(res.data.tasks);
     } catch (error) {
       console.log("Error getting tasks", error);
     }
@@ -61,9 +63,9 @@ export const TasksProvider = ({ children }) => {
   const getTask = async (taskId) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${serverUrl}/task/${taskId}`);
+      const res = await axios.get(`${serverUrl}/task/${taskId}`);
 
-      setTask(response.data);
+      setTask(res.data);
     } catch (error) {
       console.log("Error getting task", error);
     }
@@ -88,15 +90,12 @@ export const TasksProvider = ({ children }) => {
   const updateTask = async (task) => {
     setLoading(true);
     try {
-      const res = await axios.patch(`${serverUrl}/task/${task._id}`, task);
-
+      const res = await axios.patch(`${serverUrl}/task/${task._id}`, task);      
       // update the task in the tasks array
       const newTasks = tasks.map((tsk) => {
         return tsk._id === res.data._id ? res.data : tsk;
       });
-
       toast.success("Task updated successfully");
-
       setTasks(newTasks);
     } catch (error) {
       console.log("Error updating task", error);
@@ -133,9 +132,7 @@ export const TasksProvider = ({ children }) => {
 
   useEffect(() => {
     getTasks();
-  }, [userId]);
-
-  console.log("Active tasks", activeTasks);
+  }, [userId,]);
 
   return (
     <TasksContext.Provider

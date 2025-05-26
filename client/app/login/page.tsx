@@ -4,7 +4,7 @@ import LoginForm from "../Components/auth/LoginForm/LoginForm";
 import { useUserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 
-function page() {
+const page = () => {
   const { user } = useUserContext();
   const router = useRouter();
 
@@ -14,7 +14,6 @@ function page() {
       router.push("/");
     }
   }, [user, router]);
-
   // return null or a loading spinner/indicator
   if (user && user._id) {
     return null;

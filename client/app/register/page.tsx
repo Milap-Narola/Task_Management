@@ -4,7 +4,7 @@ import RegisterForm from "../Components/auth/RegisterForm/RegisterForm";
 import { useUserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 
-function page() {
+const page = () => {
   const { user } = useUserContext();
   const router = useRouter();
 

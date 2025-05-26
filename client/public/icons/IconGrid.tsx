@@ -1,12 +1,12 @@
 import React from "react";
 
-function IconGrid({
+const IconGrid = ({
   className,
   strokeColor = "black",
 }: {
   className?: string;
   strokeColor?: string;
-}) {
+}) => {
   return (
     <svg
       className={className}

@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { container, item } from "@/utils/animations";
 
-export default function Home() {
+ const Home = () => {
   useRedirect("/login");
 
   const { openModalForAdd, priority, completedTasks, setPriority } = useTasks();
@@ -48,3 +48,4 @@ export default function Home() {
     </main>
   );
 }
+export default Home;

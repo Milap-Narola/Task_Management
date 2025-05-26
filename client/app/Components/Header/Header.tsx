@@ -4,35 +4,22 @@ import { useUserContext } from "@/context/userContext";
 import { github, moon, profile } from "@/utils/Icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 
-function Header() {
+const Header = () => {
   const { user } = useUserContext();
   const { openModalForAdd, activeTasks } = useTasks();
 
   const router = useRouter();
-
   const { name } = user;
-
   const userId = user._id;
-
-  const [darkMode, setDarkMode] = React.useState(false);
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    }
-    else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode])
+  
 
   return (
     <header className="px-6 my-4 w-full flex items-center justify-between bg-[#f9f9f9]">
       <div>
         <h1 className="text-lg font-medium">
-          <span role="img" aria-label="wave">
-            👋
-          </span>
+          <span role="img" aria-label="wave">👋 </span>
           {userId ? `Welcome, ${name}!` : "Welcome to Task"}
         </h1>
         <p className="text-sm">
@@ -75,7 +62,7 @@ function Header() {
             {github}
           </Link>
           <Link
-            href="https://github.com/Maclinz/taskfyer"
+            href=""
             passHref
             target="_blank"
             rel="noopener noreferrer"
@@ -84,7 +71,7 @@ function Header() {
             {moon}
           </Link>
           <Link
-            href="https://github.com/Maclinz/taskfyer"
+            href=""
             passHref
             target="_blank"
             rel="noopener noreferrer"

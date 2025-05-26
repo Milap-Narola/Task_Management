@@ -1,7 +1,7 @@
 import { useTasks } from "@/context/taskContext";
 import React from "react";
 
-function Filters() {
+const Filters = () => {
   const { priority, setPriority } = useTasks();
 
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -16,18 +16,16 @@ function Filters() {
           width: "calc(100% / 4 - 10px)",
           height: "calc(100% - 10px)",
           top: "50%",
-          transform: `translate(calc(${activeIndex * 100}% + ${
-            activeIndex * 10
-          }px), -50%)`,
+          transform: `translate(calc(${activeIndex * 100}% + ${activeIndex * 10
+            }px), -50%)`,
           transition: "transform 300ms cubic-bezier(.95,.03,1,1)",
         }}
       ></span>
       {priorities.map((priority, index) => (
         <button
           key={index}
-          className={`relative px-1 z-10 font-medium text-sm ${
-            activeIndex === index ? "text-[#3aafae] " : "text-gray-500"
-          }`}
+          className={`relative px-1 z-10 font-medium text-sm ${activeIndex === index ? "text-[#3aafae] " : "text-gray-500"
+            }`}
           onClick={() => {
             setActiveIndex(index);
             setPriority(priority.toLowerCase());

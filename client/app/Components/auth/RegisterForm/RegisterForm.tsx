@@ -2,7 +2,7 @@
 import { useUserContext } from "@/context/userContext";
 import React from "react";
 
-function RegisterForm() {
+const RegisterForm = () => {
   const { registerUser, userState, handlerUserInput } = useUserContext();
   const { name, email, password } = userState;
   const [showPassword, setShowPassword] = React.useState(false);

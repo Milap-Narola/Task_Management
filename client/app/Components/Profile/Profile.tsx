@@ -4,7 +4,7 @@ import { useUserContext } from "@/context/userContext";
 import Image from "next/image";
 import React from "react";
 
-function Profile() {
+const Profile = () => {
   const { user } = useUserContext();
   const { tasks, activeTasks, completedTasks, openProfileModal } = useTasks();
   return (

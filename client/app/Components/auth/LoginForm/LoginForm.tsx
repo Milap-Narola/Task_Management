@@ -2,15 +2,15 @@
 import { useUserContext } from "@/context/userContext";
 import React from "react";
 
-function LoginForm() {
+const LoginForm = () => {
   const { loginUser, userState, handlerUserInput } = useUserContext();
   const { email, password } = userState;
   const [showPassword, setShowPassword] = React.useState(false);
 
   const togglePassword = () => setShowPassword(!showPassword);
 
-  return (
-    <form className="relative m-[2rem] px-10 py-14 rounded-lg bg-white w-full max-w-[520px]">
+  return(
+    <form className = "relative m-[2rem] px-10 py-14 rounded-lg bg-white w-full max-w-[520px]" >
       <div className="relative z-10">
         <h1 className="mb-2 text-center text-[1.35rem] font-medium">
           Login to Your Account
@@ -83,7 +83,7 @@ function LoginForm() {
         </div>
       </div>
       <img src="/flurry.png" alt="" />
-    </form>
+    </form >
   );
 }
 

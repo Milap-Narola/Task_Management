@@ -61,20 +61,17 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   // get email and password from req.body
   const { email, password } = req.body;
-
   // validation
   if (!email || !password) {
-
     return res.status(400).json({ message: "All fields are required" });
   }
-
   // check if user exists
   const userExists = await User.findOne({ email });
   if (!userExists) {
     return res.status(404).json({ message: "User not found, sign up!" });
   }
   // check id the password match the hashed password in the database
-  const isMatch = await bcrypt.compare(password, userExists.password);
+  const isMatch = await bcrypt.compare(password,userExists.password,);
   if (!isMatch) {
     return res.status(400).json({ message: "Invalid credentials" });
   }
@@ -156,18 +153,16 @@ export const updateUser = async (req, res) => {
 // login status
 export const userLoginStatus = async (req, res) => {
   const token = req.cookies.token;
-
   if (!token) {
     // 401 Unauthorized
     res.status(401).json({ message: "Not authorized, please login!" });
   }
   // verify the token
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
   if (decoded) {
-    res.status(200).json(true);
+    return res.status(200).json(true);
   } else {
-    res.status(401).json(false);
+    return res.status(401).json(false);
   }
 };
 
@@ -175,7 +170,6 @@ export const userLoginStatus = async (req, res) => {
 export const verifyEmail = async (req, res) => {
   let { id } = req.params
   const user = await User.findById(id);
-
   // if user exists
   if (!user) {
     return res.status(404).json({ message: "User not found" });
@@ -184,9 +178,7 @@ export const verifyEmail = async (req, res) => {
   if (user.isVerified) {
     return res.status(400).json({ message: "User is already verified" });
   }
-
   let token = await Token.findOne({ userId: user._id });
-
   // if token exists --> delete the token
   if (token) {
     await token.deleteOne();

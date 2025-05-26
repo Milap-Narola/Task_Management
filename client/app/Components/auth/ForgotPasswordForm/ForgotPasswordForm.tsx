@@ -2,7 +2,7 @@
 import { useUserContext } from "@/context/userContext";
 import React, { useState } from "react";
 
-function ForgotPasswordForm() {
+const ForgotPasswordForm = () => {
   const { forgotPasswordEmail } = useUserContext();
 
   // state

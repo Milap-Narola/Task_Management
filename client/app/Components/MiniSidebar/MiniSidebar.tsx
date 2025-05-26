@@ -10,7 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-function MiniSidebar() {
+const MiniSidebar = () => {
   const pathname = usePathname();
 
   const getStrokeColor = (link: string) => {

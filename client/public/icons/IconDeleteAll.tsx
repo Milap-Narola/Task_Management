@@ -1,6 +1,6 @@
 import React from "react";
 
-function IconDeleteAll({ strokeColor = "black" }: { strokeColor?: string }) {
+const IconDeleteAll = ({ strokeColor = "black" }: { strokeColor?: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

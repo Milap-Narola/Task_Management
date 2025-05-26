@@ -8,7 +8,7 @@ interface Props {
   };
 }
 
-function page({ params }: Props) {
+const page = ({ params }: Props) => {
   const { verificationToken } = params;
 
   const { verifyUser } = useUserContext();

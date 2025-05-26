@@ -10,7 +10,7 @@ interface TaskItemProps {
   task: Task;
 }
 
-function TaskItem({ task }: TaskItemProps) {
+const TaskItem = ({ task }: TaskItemProps) => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "low":
@@ -24,7 +24,7 @@ function TaskItem({ task }: TaskItemProps) {
     }
   };
 
-  const { getTask, openModalForEdit, deleteTask, modalMode} = useTasks();
+  const { getTask, openModalForEdit, deleteTask, modalMode } = useTasks();
 
   return (
     <motion.div
@@ -43,9 +43,8 @@ function TaskItem({ task }: TaskItemProps) {
         <div>
           <div className="flex items-center gap-3 text-gray-400 text-[1.2rem]">
             <button
-              className={`${
-                task.completed ? "text-yellow-400" : "text-gray-400"
-              }`}
+              className={`${task.completed ? "text-yellow-400" : "text-gray-400"
+                }`}
             >
               {star}
             </button>

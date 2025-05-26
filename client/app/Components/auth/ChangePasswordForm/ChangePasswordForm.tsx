@@ -2,7 +2,7 @@
 import { useUserContext } from "@/context/userContext";
 import React, { useState } from "react";
 
-function ChangePasswordForm() {
+const ChangePasswordForm = () => {
   const { changePassword } = useUserContext();
 
   // state

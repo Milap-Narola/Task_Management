@@ -6,7 +6,7 @@ import { badge, check, github, mail } from "@/utils/Icons";
 import Image from "next/image";
 import React from "react";
 
-function ProfileModal() {
+const ProfileModal = () => {
   const ref = React.useRef(null);
 
   const { closeModal } = useTasks();

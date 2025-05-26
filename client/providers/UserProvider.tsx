@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-function UserProvider({ children }: Props) {
+const UserProvider = ({ children }: Props) => {
   return (
     <UserContextProvider>
       <TasksProvider>{children}</TasksProvider>

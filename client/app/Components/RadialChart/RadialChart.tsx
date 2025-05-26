@@ -31,7 +31,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-function RadialCHart() {
+const RadialCHart = () => {
   const { tasks, completedTasks, activeTasks } = useTasks();
   const tasksTotal = tasks.length;
 
