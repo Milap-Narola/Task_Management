@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 const TasksContext = createContext();
 
-const serverUrl = "http://localhost:8000/api/v2";
+const serverUrl = "https://task-management-bc5m.onrender.com";
 
 export const TasksProvider = ({ children }) => {
   const userId = useUserContext().user._id;

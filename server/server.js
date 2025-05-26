@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 app.use(cors(
     {
-        origin: 'http://localhost:3000',
+ origin: 'http://localhost:3000',
         credentials: true,
     }
 ));
@@ -22,8 +22,8 @@ app.use(errorHandler);
 app.get('/', (req, res) => {
     res.send('Welcome to the Node server');
 });
-app.use('/api/v1', UserRouter);
-app.use('/api/v2', taskRouter)
+app.use('/', UserRouter);
+app.use('/', taskRouter)
 const PORT = process.env.PORT || 8090;
 app.listen(8000, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
