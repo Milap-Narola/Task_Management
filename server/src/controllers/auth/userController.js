@@ -151,7 +151,7 @@ export const updateUser = async (req, res) => {
   });
 };
 // login status
-export const userLoginStatus = async (req, res) => {
+export const checkUserLoginStatus = async (req, res) => {
   const token = req.cookies.token;
   if (!token) {
     // 401 Unauthorized

@@ -13,6 +13,7 @@ const Header = () => {
   const router = useRouter();
   const { name } = user;
   const userId = user._id;
+  console.log(userId);
   
 
   return (

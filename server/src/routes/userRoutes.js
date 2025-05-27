@@ -4,7 +4,7 @@ import {
   forgotPassword,
   getUser,
   loginUser,
-  userLoginStatus,
+  checkUserLoginStatus,
   logoutUser,
   registerUser,
   resetPassword,
@@ -37,7 +37,7 @@ UserRouter.delete("/admin/users/:id", protect, adminMiddleware, deleteUser);
 UserRouter.get("/admin/users", protect, creatorMiddleware, getAllUsers);
 
 // login status
-UserRouter.get("/login-status", userLoginStatus);
+UserRouter.get("/login-status", checkUserLoginStatus);
 
 // email verification
 UserRouter.post("/verify-email", protect, verifyEmail);

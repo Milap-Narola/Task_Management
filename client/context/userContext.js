@@ -135,7 +135,7 @@ export const UserContextProvider = ({ children }) => {
     } catch (error) {
       console.log("Error getting user details", error);
       setLoading(false);
-      toast.error(error.response.data.message);
+      toast.error(error.res.data.message);
     }
   };
 
@@ -163,7 +163,7 @@ export const UserContextProvider = ({ children }) => {
     } catch (error) {
       console.log("Error updating user details", error);
       setLoading(false);
-      toast.error(error.response.data.message);
+      toast.error(error.res.data.message);
     }
   };
 
@@ -184,7 +184,7 @@ export const UserContextProvider = ({ children }) => {
     } catch (error) {
       console.log("Error sending email verification", error);
       setLoading(false);
-      toast.error(error.response.data.message);
+      toast.error(error.res.data.message);
     }
   };
 
@@ -210,7 +210,7 @@ export const UserContextProvider = ({ children }) => {
       router.push("/");
     } catch (error) {
       console.log("Error verifying user", error);
-      toast.error(error.response.data.message);
+      toast.error(error.res.data.message);
       setLoading(false);
     }
   };
